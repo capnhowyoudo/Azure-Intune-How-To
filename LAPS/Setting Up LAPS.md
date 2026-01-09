@@ -57,7 +57,6 @@ Save the following powershell script as $${\color{blue}localLAPsAdminAccountCrea
         -Password $Password `
         -FullName "LAPS Local Admin Account" `
         -Description "Local Administrator account managed by LAPS" `
-        -PasswordNeverExpires `
         -UserMayNotChangePassword
     }
 

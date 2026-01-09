@@ -121,3 +121,16 @@ Open Identity > Devices > All devices > Device Settings and enable the feature E
 
 <img width="1499" height="808" alt="image" src="https://github.com/user-attachments/assets/059323d8-da9f-40c8-b664-1499fa25b58e" />
 
+# Configure Windows LAPS
+
+The policy for Windows LAPS is created in the Microsoft Intune admin center https://intune.microsoft.com/
+
+Open Endpoint Security > Manage > Account protection and create a new policy with Create Policy
+
+<img width="1512" height="814" alt="image" src="https://github.com/user-attachments/assets/094cc3cc-8410-4d2d-9af3-2b92dfeb00d1" />
+
+Select Platform Windows (1), Profile Local admin password solution (Windows LAPS) (2) create the profile with Create (3).
+
+<img width="1505" height="808" alt="image" src="https://github.com/user-attachments/assets/2bef5cb3-321c-4a3f-8006-3b049995daca" />
+
+

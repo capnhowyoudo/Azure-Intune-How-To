@@ -45,6 +45,20 @@ Save the following powershell script as $${\color{blue}localLAPsAdminAccountCrea
 >:information_source: Password can be changed in the PasswordString.
 >Password will be rotated with LAPS
 
+    <#
+    .SYNOPSIS
+    Creates a local administrator account for use with Windows LAPS.
+
+    .DESCRIPTION
+    This script checks for the existence of a local user account named "LAPS".
+    If the account does not exist, it creates the account with a temporary password,
+    prevents the user from changing the password, and adds the account to the local
+    Administrators group.
+
+    The temporary password is intended to be rotated automatically by Windows
+    Local Administrator Password Solution (LAPS).
+    #>
+    
     $Username = "LAPS"
     $AdminGroup = "Administrators"
 

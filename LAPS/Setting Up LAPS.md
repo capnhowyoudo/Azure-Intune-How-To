@@ -1,5 +1,3 @@
-# :construction: Under Construction :construction:
-
 # Windows LAPS in Microsoft Intune
 Windows LAPS (Local Administrator Password Solution) offers a streamlined, secure, and centralized way to manage local administrator passwords via Microsoft Intune. Each device is assigned a unique, time-limited local administrator password, which is automatically managed for expiration and rotation. The passwords are securely stored in either Microsoft Entra ID (formerly Azure Active Directory) or in a local Active Directory.
 
@@ -60,14 +58,21 @@ The following Windows LAPS configuration serves as a suggestion and can be custo
 | Setting  | Value |
 | ------------- | ------------- |
 | Backup Directory  | 	Backup the password to Azure AD only  |
-| Password Age Days  | 30  |
+| Password Age Days  | 7  |
 | Administrator Account Name  | Configured  | 
 | Administrator Account Name  | LAPS  | 
 | Password Complexity  | Large Letters + Small Letters + Numbers + Special Characters (Default) |
 | Passphrase Length  | 	14  |
 | Password Length | Configured |
+| Post Authentication Actions | Reset password: upon Expiry of the grace period, the managed account password will be reset.|
+| Automatic Account Management Enabled | The target account will be automatically managed |
+| Automatic Account Management Enable Account | The target account will be enabled |
+| Automatic Account Management Randomize Name | The name of the target account will not use a random numeric suffix. (Default) |
+| Automatic Account Management Target | Manage a new custom administrator account (Default) |
+| Automatic Account Management Name Or Prefix | Configured |
+| Automatic Account Management Name Or Prefix | azurelaps (This will be the new local admin account that will get created) |
 
-<img width="1368" height="876" alt="image" src="https://github.com/user-attachments/assets/294acba6-d856-41c8-9596-f95ffb7f96f6" />
+<img width="1356" height="883" alt="image" src="https://github.com/user-attachments/assets/bdeafa5f-8e4d-4650-81f3-debb08f27d6c" />
 
 Create custom scope tags based on individual requirements.
 
@@ -84,6 +89,8 @@ Review the profile settings and complete the creation by clicking Save.
 After a short time, the new profile for Windows LAPS is created.
 
 <img width="1913" height="853" alt="image" src="https://github.com/user-attachments/assets/8491f291-1af1-449b-a3ea-60b3419fd1b2" />
+
+The next time the workstation checks in the polcy will be pushed and the local account created and added to the local admin gorup. 
 
 
 

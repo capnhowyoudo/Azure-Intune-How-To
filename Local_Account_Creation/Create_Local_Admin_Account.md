@@ -1,8 +1,4 @@
-# :construction: Under Construction :construction:
-
 # Create New Local Administrator Account
-
-It is recommended to create a custom local administrator account for workstations managed by Windows LAPS, while keeping the built-in "Administrator" account disabled. Here's why:
 
 1. **Security Best Practice**: The built-in "Administrator" account has a known Relative Identifier (RID) of 500, making it a predictable target for attackers. By creating a new account with a unique, randomized name, you add an extra layer of security through obfuscation, making it more difficult for automated attacks to target the account.
 
@@ -10,41 +6,43 @@ It is recommended to create a custom local administrator account for workstation
 
 3. **Improved Management**: A dedicated, custom account makes it easier to differentiate between administrative accounts and other domain or standard user accounts, simplifying auditing and monitoring processes.
 
-Save the following powershell script as $${\color{blue}localLAPsAdminAccountCreation.ps1}$$
+Save the following powershell script as $${\color{blue}localAdminAccountCreation.ps1}$$
 
 >:information_source: Password can be changed in the PasswordString.
 >Password will be rotated with LAPS
 
     <#
     .SYNOPSIS
-    Creates a local administrator account for use with Windows LAPS.
+    Creates a local administrator account.
 
     .DESCRIPTION
-    This script checks for the existence of a local user account named "LAPS".
+    This script checks for the existence of a local user account.
     If the account does not exist, it creates the account with a temporary password,
     prevents the user from changing the password, and adds the account to the local
     Administrators group.
-
-    The temporary password is intended to be rotated automatically by Windows
-    Local Administrator Password Solution (LAPS).
     #>
-    
-    $Username = "LAPS"
+
+    # Generic local admin username
+    $Username   = "LocalAdmin"
     $AdminGroup = "Administrators"
 
-    # Temporary password (will be rotated by LAPS)
+    # Temporary password
     $Password = ConvertTo-SecureString "TempP@ssw0rd!ChangeMe" -AsPlainText -Force
 
+    # Create the user if it does not exist
     if (-not (Get-LocalUser -Name $Username -ErrorAction SilentlyContinue)) {
     New-LocalUser `
         -Name $Username `
         -Password $Password `
-        -FullName "LAPS Local Admin Account" `
-        -Description "Local Administrator account managed by LAPS" `
-        -UserMayNotChangePassword
+        -FullName "Local Administrator Account" `
+        -Description "Generic local administrator account" `
+        -UserMayNotChangePassword `
+        -PasswordNeverExpires
     }
 
+    # Add user to Administrators group
     Add-LocalGroupMember -Group $AdminGroup -Member $Username -ErrorAction SilentlyContinue
+
 
 1. Log into https://intune.microsoft.com
 2. Select Devices > Windows
@@ -55,9 +53,9 @@ Save the following powershell script as $${\color{blue}localLAPsAdminAccountCrea
 
 <img width="1712" height="576" alt="image" src="https://github.com/user-attachments/assets/b318a702-95eb-4896-a3aa-6e3b2ecc8e39" />
 
-4. Create a name for example "Create Local LAPS Local Accounts" > Next
+4. Create a name for example "Local Admin Account Creation" > Next
 
-<img width="1687" height="881" alt="image" src="https://github.com/user-attachments/assets/f9ebfc69-fc57-4055-8ae1-1e5f0e9b4f2e" />
+<img width="1583" height="879" alt="image" src="https://github.com/user-attachments/assets/257741bd-d493-4fb4-b598-66a1e0617df1" />
 
 5. Browse to the location where you had saved the .ps1
     - Run this script using the logged on credentials = No
@@ -65,7 +63,7 @@ Save the following powershell script as $${\color{blue}localLAPsAdminAccountCrea
     - Run script in 64 bit PowerShell Host = Yes
     - Next
 
-<img width="1692" height="878" alt="image" src="https://github.com/user-attachments/assets/b8ccf2b2-712a-4ead-8bb2-ecdf13eb6fa0" />
+<img width="1485" height="878" alt="image" src="https://github.com/user-attachments/assets/2444c811-f87a-404b-8a03-fad9a2183c82" />
 
 6. Add devices by group or apply to all devices, based on your requirements > Next
 
@@ -73,12 +71,12 @@ Save the following powershell script as $${\color{blue}localLAPsAdminAccountCrea
 
 7. Review + Create
 
-<img width="1687" height="872" alt="image" src="https://github.com/user-attachments/assets/ff5c6770-0aa8-437b-a255-62ee6eb3dd0d" />
+<img width="1538" height="878" alt="image" src="https://github.com/user-attachments/assets/ade516d2-0aba-43af-861f-b4ff387d7db0" />
 
 8. Script will be pushed the next time the workstations sync with Azure.
 
-<img width="1691" height="680" alt="image" src="https://github.com/user-attachments/assets/a2110142-1072-442a-9e33-c0ac22dcb9bd" />
+<img width="1907" height="877" alt="image" src="https://github.com/user-attachments/assets/ae827faa-38d5-47d0-8b28-18d704b7ddab" />
 
 9. You can check deployment status within the platform script
 
-<img width="1693" height="877" alt="image" src="https://github.com/user-attachments/assets/afd71903-0c88-4cb3-b5b0-4bd22efcd958" />
+<img width="1576" height="879" alt="image" src="https://github.com/user-attachments/assets/b2a9d2ea-27c7-4d18-a6e8-ac70830f80be" />

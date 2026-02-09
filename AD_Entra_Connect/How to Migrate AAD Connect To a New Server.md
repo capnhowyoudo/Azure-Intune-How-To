@@ -69,3 +69,52 @@ At this stage, complete the AAD Connect migration by removing AADC from the old 
 
 Launch the Synchronization Service Manager client from C:\Program Files\Microsoft Azure AD Sync\UIShell\miisclient.exe to verify that the initial full sync has completed on the new server.
 
+At this stage, complete the AAD Connect migration by removing AADC from the old server and turning off staging mode on the new server.
+
+<img width="1113" height="499" alt="image" src="https://github.com/user-attachments/assets/da9b8ebb-91f2-4404-a011-c22d0e1840cb" />
+
+On the old AADC server, log in, open Programs and Features, and remove Microsoft Azure AD Connect.
+
+<img width="874" height="614" alt="image" src="https://github.com/user-attachments/assets/79466229-1af9-4535-8a59-b2b2192b247a" />
+
+Check “Also uninstall supporting components”, then click Remove
+
+<img width="875" height="608" alt="image" src="https://github.com/user-attachments/assets/b1e4ce4b-477e-4cf6-90db-48ce57409b64" />
+
+The AADC installation has been successfully removed from the old server
+
+Next, log in to the new AADC server and run Azure AD Connect to disable staging mode.
+
+<img width="872" height="612" alt="image" src="https://github.com/user-attachments/assets/6b21b028-1c3c-4096-866a-75806c40abdb" />
+
+Select Configure staging mode and proceed by clicking Next.
+
+<img width="873" height="612" alt="image" src="https://github.com/user-attachments/assets/935b883a-91c9-4fea-8c78-f87f04d41dc4" />
+
+Enter the credentials of a tenant administrator who has Hybrid Identity Administrator or Global Administrator privileges.
+
+<img width="874" height="614" alt="image" src="https://github.com/user-attachments/assets/08d065d5-62ab-492d-ae77-5271b2485acb" />
+
+Ensure Enable staging mode is unchecked before clicking Next.
+
+<img width="874" height="615" alt="image" src="https://github.com/user-attachments/assets/9c365a06-8953-4df1-ac9a-37cdac281e49" />
+
+Select Configure to disable staging mode and initiate the synchronization process.
+
+<img width="875" height="614" alt="image" src="https://github.com/user-attachments/assets/3f9fd934-0d3f-44cc-b27a-6e47b04c1346" />
+
+Click Exit to complete the migration to the new AAD Connect server.
+
+Final Step: Remove the Old MSOL_<guid> Account(s)
+
+The last step is to delete the old MSOL_<guid> user account from Active Directory. There is one MSOL_<guid> account for each AADC installation. Note that uninstalling AADC does not remove these accounts automatically.
+
+- Open Active Directory Users and Computers.
+- Locate the MSOL_<guid> accounts. By default, they are usually in the Users container.
+- Check the Description field for each account to identify which computer created it.
+- Delete the appropriate MSOL_<guid> account(s).
+
+<img width="781" height="509" alt="image" src="https://github.com/user-attachments/assets/22c0abe9-ea7b-43d1-89a6-b23018399b8c" />
+
+Remove the MSOL_<guid> account associated with the old AADC server.
+
